@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>永寬化學 Photo Sphere Viewer</title> 
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4/dist/photo-sphere-viewer.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4/dist/plugins/markers.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4/dist/plugins/compass.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4/dist/plugins/virtual-tour.css">
+  <style>
+    html, body, #photosphere {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    }
+    h1,p{
+      color:white;
+    }
+    .textinfo{
+      background-color:black;
+    }
+  </style>
+</head>
+<body>
+
+<div id="photosphere"></div>
+<script src="https://cdn.jsdelivr.net/npm/three/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uevent@2/browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4/dist/photo-sphere-viewer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4/dist/plugins/markers.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4/dist/plugins/compass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4/dist/plugins/virtual-tour.js"></script>
+
+<script type="text/template" id="info1">
+  <div class="textinfo">
+  <h1>電動車馬達</h1>
+  <img src="https://i.imgur.com/od7uCwn.png" style="width:100%;">
+  <p>近年來，環境議題逐漸受到社會的重視，傳統汽機車添加汽油與藉由引擎運轉，聲音大且會排放廢氣，造成噪音與空氣污染，而電動車改用電池與馬達驅動，改善了以上缺點。因應環保政策，全球汽車大廠紛紛開發各自的電動車產品，而永寬也趕上了這波趨勢，與馬達大廠合作，花費3年不斷的測試與調整，終於開發出適合電動汽車馬達的定子(線圈)灌注膠與轉子(磁石)接著膠。<br>
+    電動汽車馬達在高速運轉下，溫度會超過150c甚至到達180c，常見的馬達灌注產品在此溫度下，往往會因為膠材的機械與電性性能的下降而造成馬達的效能下降，甚至會產生缺陷(如膠材龜裂)，嚴重時會導致馬達短路或燒毀，最終無法通過壽命評估。溫度對於有機材料而言，永遠是最大的挑戰，永寬克服了嚴格的測試，包括 耐冷熱衝擊(-40c ~ 150c)<br>
+    超過100循環。在空氣中或泡油的情況下，長期180c 加熱，膠材無龜裂，馬達電氣特性良好，接著強度無下降。優異的材料特性，最終通過了超過7萬公里的實車運轉測試。
+    永寬了解材料的特性，經由材料的選擇、測試、實驗分析，解決客戶的疑難雜症，提供客戶滿意的產品。
+  </p>
+</div>
+</script>
+
+<script type="text/template" id="info2">
+  <div class="textinfo">
+  <h1>自行車</h1>
+  <img src="https://i.imgur.com/tbiHZVU.png" style="width:100%;">
+  <p>永寬化學致力於開發環氧樹脂接著劑，成為自行車生產廠商的指定材料。我們的產品穩定、可靠、能夠客製化，可滿足不同的應用。環氧樹脂對於金屬、碳纖維複合材料…都具有良好的接著性，固化後具有(1)高接著強度(2)高剝離強度(3)高耐衝擊性(4)高抗疲勞性(5)高耐候性…等眾多優點，被自行車產業廣泛的應用。<br>
+    永寬化學針對自行車產業，開發出一系列應用接著劑，舉凡車架各部位的膠合(單雙液接著劑)、補土(單雙液補土)或其它配件應用，例如：座弓補強、車把手膠合…等都有相對應的產品。它們能夠通過不同的環境測試，包括長期高低溫、冷熱衝擊、冷熱循環、前叉衝擊試驗、車架耐疲勞測試、鹽霧試驗…等，具有最高的信賴度。<br>
+    永寬化學擁有多項分析儀器，可針對接著劑進行分析，給客戶最確實的資訊參考。除此之外，我們通過ISO品質系統及環安衛系統認證，定期配合外部稽核單位，針對系統的有效性持續改善。<br>
+    使用永寬產品，客戶會獲得最高的把握度。
+  </p>
+</div>
+</script>
+
+<script>
+  var viewer = new PhotoSphereViewer.Viewer({
+  container: 'photosphere', 
+  loadingImg: 'https://i.imgur.com/cBCzvL4.png', 
+  touchmoveTwoFingers: true,
+  mousewheelCtrlKey: false,
+  //caption : 'Cape Florida Light, Key Biscayne <b>&copy; Pixexid</b>',
+  defaultLong: '-145deg',
+  plugins    : [
+    PhotoSphereViewer.MarkersPlugin,
+    [PhotoSphereViewer.VirtualTourPlugin, {
+      positionMode: PhotoSphereViewer.VirtualTourPlugin.MODE_GPS,
+      renderMode  : PhotoSphereViewer.VirtualTourPlugin.MODE_3D,
+    }],
+  ],
+  navbar: 'zoom move nodesList caption fullscreen',
+});
+
+var virtualTour = viewer.getPlugin(PhotoSphereViewer.VirtualTourPlugin);
+
+virtualTour.setNodes([
+  {
+    id      : '1',
+    panorama: ' https://i.imgur.com/x6RdlkB.jpg',
+    name    : '大門',
+    links   : [
+      { nodeId: '2' },
+    ],
+    position: [10, 25.666725, 3],
+    panoData: { poseHeading: 280},
+  },
+  {
+    id      : '2',
+    panorama: 'https://i.imgur.com/8UhSQKs.jpg',
+    name    : '行政大樓',
+    links   : [
+      { nodeId: '1' },
+      { nodeId: '3' },
+    ],
+    position: [-80.156168,25.666623, 3],
+    panoData: { poseHeading:120},
+  },
+  {
+    id      : '3',
+    panorama: 'https://i.imgur.com/aEhGySW.jpg',
+    name    : '玄關',
+    links   : [
+      //{ nodeId: '2' },
+      { nodeId: '4' },
+    ],
+    position: [80,25.666498,3],
+    panoData: { poseHeading:190 },
+  },
+  {
+    id      : '4',
+    panorama: 'https://i.imgur.com/NZklqim.jpg',
+    name    : '會議室',
+    links   : [
+      { nodeId: '3' },
+    ],
+    markers: [
+      {
+        id: 'marker-1',
+        image: 'https://i.imgur.com/YkuAlGQ.png',
+        tooltip: '<b>電動車馬達</b><br>點擊查看產品資訊',
+        width    : 32,
+        height   : 32,
+        anchor   : 'bottom center',
+        longitude: '185deg',
+        latitude: '-14deg',
+        content: document.getElementById('info1').innerHTML
+      },
+      {
+        id: 'marker-2',
+        image: 'https://i.imgur.com/YkuAlGQ.png',
+        tooltip: '<b>自行車</b><br>點擊查看產品資訊',
+        width    : 32,
+        height   : 32,
+        anchor   : 'bottom center',
+        longitude: '232deg',
+        latitude: '-15deg',
+        content: document.getElementById('info2').innerHTML
+      },
+    ],
+    position: [100, 25.666498, 10],
+    panoData: { poseHeading:400},
+  },
+], '1');
+</script>
+</body>
+</html>
