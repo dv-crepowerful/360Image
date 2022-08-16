@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+    <style>
+    #panorama {
+        width: 100%;
+        height: 900px;
+    }
+    .hotspot_info{
+        clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        height: 20px;
+        width: 20px;
+        background: red;
+        font-family: 'Times New Roman', Times, serif;
+    }
+    .hotspot_scene{
+        clip-path: polygon(50% 0%, 0% 70%, 0% 100%, 50% 30%, 100% 100%, 100% 70%);        
+        height: 50px;
+        width: 50px;
+        background-color: black;
+    }
+    div.custom-tooltip span {
+        visibility: hidden;
+        position: absolute;
+        border-radius: 3px;
+        background-color: #fff;
+        color: #000;
+        text-align: center;
+        max-width: 200px;
+        padding: 5px 10px;
+        margin-left: -220px;
+        cursor: default;
+    }
+    div.custom-tooltip:hover span{
+        visibility: visible;
+    }
+    div.custom-tooltip:hover span:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-width: 10px;
+        border-style: solid;
+        border-color: #fff transparent transparent transparent;
+        bottom: -20px;
+        left: -10px;
+        margin: 0 50%;
+    }
+    </style>
+</head>
+<body>
+
+<div id="panorama"></div>
+<script>
+pannellum.viewer('panorama', {
+    "autoLoad":true,
+    "hotSpotDebug":true,
+    "hfov":200,
+    "default":{
+        "firstScene":"firstScene",
+        "sceneFadeDuration":1500
+    },
+    "scenes":{
+        "firstScene":{
+            "title":"大門",
+            "panorama":"https://i.imgur.com/1VH9ww0.jpg",
+            "hotSpots":[{
+                "pitch":-16,
+                "yaw":0,
+                "type":"scene",
+                "cssClass": "hotspot_scene",
+                "text":"前往行政大樓",
+                "sceneId":"secondScene",
+                "targetPitch":-1,
+                "targetYaw":-104
+            }
+            ]
+        },
+        "secondScene":{
+            "title":"行政大樓",
+            "panorama":"https://i.imgur.com/74wpwyw.jpg",
+            "hotSpots":[{
+                "pitch":-15,
+                "yaw":0,
+                "type":"scene",
+                "cssClass": "hotspot_scene",
+                "text":"前往大門",
+                "sceneId":"firstScene"
+            },
+            {
+                "pitch":-25,
+                "yaw":-105,
+                "type":"scene",
+                "cssClass": "hotspot_scene",
+                "text":"前往玄關",
+                "sceneId":"thirdScene",
+                "targetPitch":0,
+                "targetYaw":-140
+            }
+            ]
+        },
+        "thirdScene":{
+            "title":"玄關",
+            "panorama":"https://i.imgur.com/pOI0ync.jpg",
+            "hotSpots":[{
+                "pitch":-32,
+                "yaw":32,
+                "type":"scene",
+                "cssClass": "hotspot_scene",
+                "text":"前往行政大樓",
+                "sceneId":"secondScene",
+                
+            },
+            {
+                "pitch":-23,
+                "yaw":-105,
+                "type":"scene",
+                "cssClass": "hotspot_scene",
+                /*"createTooltipFunc": hotspot,
+                "createTooltipArgs": "前往會議室",*/
+                "text":"前往會議室",
+                "targetPitch":-4,
+                "targetYaw":-94,
+                "sceneId":"forthScene"
+            }
+            ]
+        },
+        "forthScene":{
+            "title":"會議室",
+            "panorama":"https://i.imgur.com/9OTj4YB.jpg",
+            "hotSpots":[{
+                "pitch":-16,
+                "yaw":-124,
+                "type":"scene",
+                "cssClass": "hotspot_scene",
+                "text":"前往玄關",
+                "targetPitch":-9,
+                "targetYaw":40,
+                "sceneId":"thirdScene"
+            },{
+                "pitch":-21,
+                "yaw":0,
+                "type":"info",
+                "image":"./藥品.jpg",
+                "text":"此類型產品的特性是靠著特定波長的光源<br>以最快速的方式來讓零件達到定位及完成接著劑的固化反應<br>因此可以讓製程效率更完善"
+            }
+            ]
+        },
+    }
+});
+
+/*function hotspot(hotSpotDiv, args) {
+    hotSpotDiv.classList.add('custom-tooltip');
+    let span = document.createElement('span');
+    span.innerHTML = args;
+    hotSpotDiv.appendChild(span);
+    span.style.width = span.scrollWidth - 20 + 'px';
+    span.style.marginLeft = -(span.scrollWidth - hotSpotDiv.offsetWidth) / 2 + 'px';
+    span.style.marginTop = -span.scrollHeight - 12 + 'px';
+}*/
+</script>
+
+</body>
+</html>
